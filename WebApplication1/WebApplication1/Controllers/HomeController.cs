@@ -41,7 +41,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddListitems(IEnumerable<tblStudent> tbl)
+        public IActionResult AddListitems([FromBody] List<tblStudent> rowData)
         {
             return Json("Some message");
         }

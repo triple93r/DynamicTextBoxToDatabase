@@ -133,6 +133,7 @@
     <script>
         $(document).ready(function () {
             var rowctr = 1
+            var rowData1 = new Array();
             var rowData = new Array();
             $("#Addmore").click(function () {
                 var a = $('<tr>');
@@ -158,7 +159,7 @@
 
                 //rowData = [];
                 for (var i = 0; i < rowctr; i++) {
-                    rowData.push({
+                    rowData1.push({
                         Stud_Numbr: $('#Stud_Numbr' + [i]).val(),
                         FirstName: $('#FirstName' + [i]).val(),
                         LastName: $('#LastName' + [i]).val(),
@@ -166,15 +167,16 @@
                         Phone: $('#Phone' + [i]).val()
                     });
                 }
-                var y = JSON.stringify( rowData );
+                var y = JSON.stringify(rowData);
                 // studmodl = rowData.toString();
                 studmodl = y.toString();
+                rowData = ({ Students })
 
                 $.ajax({
                     url: '/Home/AddListitems',
                     method: 'POST',
                     contentType: 'application/json',
-                     data: JSON.stringify({ rowData }),
+                    data: JSON.stringify(rowData),
                     //data: { tbl: studmodl },
                     success: function (response) {
                         // Handle success
