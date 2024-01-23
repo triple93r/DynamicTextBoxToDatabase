@@ -150,7 +150,7 @@
 
             $("#AddNewList").click(function () {
                 debugger;
-                var studmodl = {};
+                
                 // studmodl.Stud_Numbr = '2342';
                 // studmodl.FirstName = 'tttt';
                 // studmodl.LastName = 'jghg';
@@ -166,6 +166,7 @@
                     //     Gender: $('#Gender' + [i]).val(),
                     //     Phone: $('#Phone' + [i]).val()
                     // });
+                    var studmodl = {};
                     studmodl.Stud_Numbr = $('#Stud_Numbr' + [i]).val();
                     studmodl.FirstName = $('#FirstName' + [i]).val();
                     studmodl.LastName = $('#LastName' + [i]).val();
@@ -174,11 +175,9 @@
                     rowData1.push(studmodl);
                 }
                 var y = JSON.stringify(rowData1);
-                // studmodl = rowData.toString();
-                //studmodl = y.toString();
-                //rowData = ({ Students })
+
                 rowData.push({ 'Name': 'hhh', 'Description': 'ghgh', 'Students': rowData1 });
-                //data: JSON.stringify(rowData1),
+                //data: JSON.stringify(rowData1),  // this one works with table data
                 //data: { tbl: studmodl },
                 //data: { rowData },
                 //data: { 'Name': 'hhh', 'Description': 'ghgh', 'Students': rowData1 },
@@ -201,7 +200,7 @@
                 url: '/Home/AddListitems',
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(rowData1),
+                data: JSON.stringify({ Id, Name, Description, Students }),
                 success: function (response) {
                     // Handle success
                     console.log(response);

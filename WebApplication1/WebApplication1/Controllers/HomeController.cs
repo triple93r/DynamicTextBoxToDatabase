@@ -40,28 +40,23 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddListitems([FromBody] List<tblStudent> rowData1)
-        {
-            return Json("Some message");
-        }
-
         //[HttpPost]
-        //public IActionResult AddListitems(stdVM rowData)
+        //public IActionResult AddListitems([FromBody] List<tblStudent> rowData1)
         //{
         //    return Json("Some message");
         //}
+
         //[HttpPost]
         //public IActionResult AddListitems([FromBody] string Name)
         //{
         //    return Json("Some message");
         //}
 
-        //[HttpPost]
-        //public IActionResult AddListitems([FromBody] stdVM vv)
-        //{
-        //    return Json("Some message");
-        //}
+        [HttpPost]
+        public IActionResult AddListitems([FromBody] stdVM vv)
+        {
+            return Json("Some message");
+        }
 
         public IActionResult Privacy()
         {
