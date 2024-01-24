@@ -7,46 +7,7 @@
 <h1>Additems</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Additems">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Stud_Numbr" class="control-label"></label>
-                <input asp-for="Stud_Numbr" class="form-control" />
-                <span asp-validation-for="Stud_Numbr" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <input type="button" value="AddNew" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 <div>
     <form asp-action="AddListitems">
         <input type="button" id="AddNewList" value="AddNewList" class="btn btn-primary" />
@@ -134,7 +95,7 @@
         $(document).ready(function () {
             var rowctr = 1
             var rowData1 = new Array();
-            var rowData = new Array();
+            ///var rowData = new Array();
             $("#Addmore").click(function () {
                 var a = $('<tr>');
                 a.append('<td><input type="text" class= "form-control" id = "Stud_Numbr'+rowctr+'" /></td>');
@@ -142,49 +103,48 @@
                 a.append('<td><input type="text" class= "form-control" id = "LastName'+rowctr+'" /></td>');
                 a.append('<td><input type="text" class= "form-control" id = "Gender'+rowctr+'" /></td>');
                 a.append('<td><input type="text" class= "form-control" id = "Phone'+rowctr+'" /></td>');
-                a.append('<td><button class="form-control" id="Addmore">+</button></td>');
+                a.append('<td><button class="form-control  btn btn-danger" id="btnRemove' + rowctr + '">x</button></td>');
                 a.append('</tr>');
-                $('#tbd12').append(a);
+                //$('#tbd12').append(a);
+                $(this).closest('tr').after(a);
                 rowctr++;
+            });
+
+            $('#tbd12').on('click', '.btn.btn-danger', function () {
+                // Find the closest 'tr' element and remove it
+                $(this).closest('tr').remove();
             });
 
             $("#AddNewList").click(function () {
                 debugger;
                 
-                // studmodl.Stud_Numbr = '2342';
-                // studmodl.FirstName = 'tttt';
-                // studmodl.LastName = 'jghg';
-                // studmodl.Gender = 'male';
-                // studmodl.Phone = '25252';
-
-                //rowData = [];
                 for (var i = 0; i < rowctr; i++) {
-                    // rowData1.push({
-                    //     Stud_Numbr: $('#Stud_Numbr' + [i]).val(),
-                    //     FirstName: $('#FirstName' + [i]).val(),
-                    //     LastName: $('#LastName' + [i]).val(),
-                    //     Gender: $('#Gender' + [i]).val(),
-                    //     Phone: $('#Phone' + [i]).val()
-                    // });
                     var studmodl = {};
-                    studmodl.Stud_Numbr = $('#Stud_Numbr' + [i]).val();
-                    studmodl.FirstName = $('#FirstName' + [i]).val();
-                    studmodl.LastName = $('#LastName' + [i]).val();
-                    studmodl.Gender = $('#Gender' + [i]).val();
-                    studmodl.Phone = $('#Phone' + [i]).val();
-                    rowData1.push(studmodl);
-                }
-                var y = JSON.stringify(rowData1);
+                    // Get values from input fields
+                    var studNumbr = $('#Stud_Numbr' + i).val();
+                    var firstName = $('#FirstName' + i).val();
+                    var lastName = $('#LastName' + i).val();
+                    var gender = $('#Gender' + i).val();
+                    var phone = $('#Phone' + i).val();
 
-                rowData.push({ 'Name': 'hhh', 'Description': 'ghgh', 'Students': rowData1 });
+                    // Check if any value is undefined
+                    if (studNumbr !== undefined && firstName !== undefined && lastName !== undefined && gender !== undefined && phone !== undefined) {
+                        // Assign values to studmodl only if they are not undefined
+                        studmodl.Stud_Numbr = studNumbr;
+                        studmodl.FirstName = firstName;
+                        studmodl.LastName = lastName;
+                        studmodl.Gender = gender;
+                        studmodl.Phone = phone;
+
+                        // Push the row data only if all values are defined
+                        rowData1.push(studmodl);
+                    }
+                }
+                //var y = JSON.stringify(rowData1);
+
+                //rowData.push({ 'Name': 'hhh', 'Description': 'ghgh', 'Students': rowData1 });
                 //data: JSON.stringify(rowData1),  // this one works with table data
-                //data: { tbl: studmodl },
-                //data: { rowData },
-                //data: { 'Name': 'hhh', 'Description': 'ghgh', 'Students': rowData1 },
-                //data: { Name: 'hhh', Description: 'ghgh', Students: y },
-                //data: { 'Name': 'hhh', 'Description': 'ghgh', 'Students': JSON.stringify(rowData1) },
-                //data: { "Id": JSON.stringify(Id) },
-                //data: JSON.stringify({ Id, Name, Students, Description }),
+                
                 senddata(rowData1);
             });
 
@@ -193,14 +153,14 @@
 
         function senddata(rowData1) {
             var Id = 23;
-            var Name = "John";
+            var ClassId = 2;
             var Students = rowData1;
-            var Description = 'ghgh';
+            var Notes = 'ghgh';
             $.ajax({
                 url: '/Home/AddListitems',
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ Id, Name, Description, Students }),
+                data: JSON.stringify({ Id, ClassId, Notes, Students }),
                 success: function (response) {
                     // Handle success
                     console.log(response);

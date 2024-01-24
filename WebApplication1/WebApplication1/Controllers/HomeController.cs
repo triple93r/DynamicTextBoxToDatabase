@@ -55,7 +55,42 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult AddListitems([FromBody] stdVM vv)
         {
-            return Json("Some message");
+            if (vv != null)
+            {
+                try
+                {
+                    int[] intArr = new int[vv.Students.Count];
+                    //List<int> StidList = new List<int>();
+                    int ctr = 0;
+                    foreach (var student in vv.Students)
+                    {
+                        _context.tblStudent.Add(student);
+                        _context.SaveChanges();
+                        intArr[ctr] = student.Id;
+                        //StidList.Add(_context.SaveChanges());
+                        ctr++;
+                    }
+
+                    
+                    foreach (var stid in intArr)
+                    {
+                        StudentClass stud = new StudentClass();
+                        stud.StudId = stid;
+                        stud.ClassId = vv.ClassId;
+                        _context.StudentClass.Add(stud);
+                        _context.SaveChanges();
+                    }
+                    
+                    return Json("Data saved successfully");
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it appropriately
+                    return BadRequest("Error saving data: " + ex.Message);
+                }
+            }
+
+            return BadRequest("No data received");
         }
 
         public IActionResult Privacy()
