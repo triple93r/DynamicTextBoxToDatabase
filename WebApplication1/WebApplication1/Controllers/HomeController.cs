@@ -70,8 +70,7 @@ namespace WebApplication1.Controllers
                         //StidList.Add(_context.SaveChanges());
                         ctr++;
                     }
-
-                    
+                                        
                     foreach (var stid in intArr)
                     {
                         StudentClass stud = new StudentClass();
@@ -79,8 +78,7 @@ namespace WebApplication1.Controllers
                         stud.ClassId = vv.ClassId;
                         _context.StudentClass.Add(stud);
                         _context.SaveChanges();
-                    }
-                    
+                    }                    
                     return Json("Data saved successfully");
                 }
                 catch (Exception ex)
@@ -89,7 +87,6 @@ namespace WebApplication1.Controllers
                     return BadRequest("Error saving data: " + ex.Message);
                 }
             }
-
             return BadRequest("No data received");
         }
 
